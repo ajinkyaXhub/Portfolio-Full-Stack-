@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, DM_Mono, Syne } from "next/font/google";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -11,6 +11,12 @@ const dmMono = DM_Mono({
   weight: ["400", "500"],
   subsets: ["latin"],
   variable: "--font-mono",
+});
+
+const syne = Syne({
+  weight: ["700", "800"],
+  subsets: ["latin"],
+  variable: "--font-syne",
 });
 
 export const metadata: Metadata = {
@@ -29,9 +35,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${dmMono.variable} scroll-smooth`}
+      className={`${plusJakarta.variable} ${dmMono.variable} ${syne.variable} scroll-smooth`}
     >
-      <body className="bg-[#030303] text-[#f4f4f5] antialiased min-h-screen">
+      <body className="bg-[#050810] text-[#e8eaf0] antialiased min-h-screen">
         <div className="noise-bg" />
         {children}
       </body>

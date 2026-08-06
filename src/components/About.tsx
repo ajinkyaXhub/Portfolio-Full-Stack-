@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Award, Code2, Database, BrainCircuit } from "lucide-react";
+import Image from "next/image";
 
 const stats = [
   { value: "2+", label: "Industry Internships", icon: Award },
@@ -17,53 +18,69 @@ export default function About() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary">01 / Profile</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">Who I Am</h2>
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#00d4e8]">01 / Profile</span>
+            <h2 className="text-4xl font-extrabold text-white mt-2">Who I Am</h2>
           </div>
           <div className="h-[1px] flex-grow bg-white/10 hidden md:block mx-12 mb-4" />
         </div>
 
         {/* Grid Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text */}
-          <div className="lg:col-span-7 space-y-6 text-zinc-300 text-lg leading-relaxed">
+          <div className="lg:col-span-7 space-y-6 text-zinc-300 text-base sm:text-lg leading-relaxed">
             <p>
-              I am Ajinkya Mane, a Computer Science student and software engineer based in Pune, India. I specialize in bridging the gap between sophisticated machine learning models and robust full-stack applications.
+              Hello there! I'm Ajinkya Mane, a dedicated Computer CS Engineer with a strong passion for developing robust and user-friendly applications.
             </p>
             <p>
-              My engineering philosophy revolves around building <strong className="text-white">production-grade solutions</strong> with real-world utility, rather than simple proof-of-concept models. From architecting high-accuracy RAG (Retrieval-Augmented Generation) systems to implementing secure user flows, I aim to ship clean, optimizeable code.
+              My journey in tech began with a curiosity for how things work, quickly evolving into hands-on experience in both <strong className="text-white">front-end development</strong> and <strong className="text-[#00d4e8]">intelligent systems (AI)</strong>. I thrive in environment where I can leverage my skills to build innovative solutions.
             </p>
             <p>
-              Having worked as a Python Full-Stack Developer intern, I have experience working with databases like PostgreSQL/MongoDB, backend frameworks like Django/Flask/Express, and modern frontend tools like React/Next.js/TailwindCSS to construct high-speed user interfaces.
+              I build AI systems that solve real business problems, not just proof-of-concepts. From architecting high-accuracy RAG (Retrieval-Augmented Generation) systems to implementing secure user flows, I aim to ship clean, optimizeable code.
             </p>
           </div>
 
-          {/* Right Stats Grid */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  key={stat.label}
-                  className="glass p-6 rounded-xl border border-white/5 flex flex-col justify-between h-40 hover:border-primary/20 hover:bg-white/[0.02] transition-all"
-                >
-                  <div className="flex justify-between items-start">
-                    <span className="text-2xl sm:text-3xl font-mono font-bold text-white tracking-tight">
-                      {stat.value}
-                    </span>
-                    <Icon className="w-5 h-5 text-primary opacity-80" />
-                  </div>
-                  <span className="text-xs sm:text-sm text-zinc-400 font-medium leading-snug">
-                    {stat.label}
-                  </span>
-                </motion.div>
-              );
-            })}
+          {/* Right Morphing Image wrapper */}
+          <div className="lg:col-span-5 flex justify-center items-center py-6">
+            <div className="about-image-wrapper">
+              <div className="about-image">
+                <Image
+                  src="/pfp.jpg"
+                  alt="Ajinkya Mane"
+                  width={340}
+                  height={340}
+                  priority
+                  className="w-full h-full object-cover object-center filter brightness-95"
+                />
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                key={stat.label}
+                className="glass p-6 rounded-xl border border-white/5 flex flex-col justify-between h-40 hover:border-[#00d4e8]/20 hover:bg-white/[0.01] transition-all"
+              >
+                <div className="flex justify-between items-start">
+                  <span className="text-3xl font-mono font-bold text-white tracking-tight">
+                    {stat.value}
+                  </span>
+                  <Icon className="w-5 h-5 text-[#00d4e8] opacity-80" />
+                </div>
+                <span className="text-xs text-zinc-400 font-medium leading-snug">
+                  {stat.label}
+                </span>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

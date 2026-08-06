@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import BackgroundGrid from "@/components/BackgroundGrid";
+import BackgroundParticles from "@/components/BackgroundParticles";
 import CustomCursor from "@/components/CustomCursor";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -17,7 +18,10 @@ export default function Home() {
       {/* Interactive Cursor Trail */}
       <CustomCursor />
 
-      {/* Luxury Background elements */}
+      {/* Starry Connected Constellation Canvas Backdrop */}
+      <BackgroundParticles />
+
+      {/* Floating Glowing Blobs Grid Backdrop */}
       <BackgroundGrid />
 
       {/* Navigation */}

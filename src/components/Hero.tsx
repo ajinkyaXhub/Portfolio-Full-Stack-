@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, FileText, Mail } from "lucide-react";
-import Image from "next/image";
+import RobotCanvas from "./RobotCanvas";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -25,14 +25,14 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1,
       },
     },
   };
 
   const itemVariants: any = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } },
   };
 
   return (
@@ -47,8 +47,8 @@ export default function Hero() {
         >
           {/* Small Tag */}
           <motion.div variants={itemVariants} className="inline-flex items-center space-x-2">
-            <span className="h-[1px] w-8 bg-primary" />
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary font-semibold">
+            <span className="h-[1px] w-8 bg-[#00d4e8]" />
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#00d4e8] font-semibold">
               AI Engineer • Full Stack Developer
             </span>
           </motion.div>
@@ -56,13 +56,12 @@ export default function Hero() {
           {/* Huge Heading */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white"
+            className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.0] text-white"
           >
-            Building{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#8a3ffc] glow-text">
-              AI-powered products
-            </span>{" "}
-            that solve real-world problems.
+            Ajinkya<br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00d4e8] via-[#8b5cf6] to-[#f472b6] glow-text leading-[1.2]">
+              Mane.
+            </span>
           </motion.h1>
 
           {/* Description */}
@@ -70,7 +69,7 @@ export default function Hero() {
             variants={itemVariants}
             className="text-lg text-zinc-400 max-w-xl font-normal leading-relaxed"
           >
-            Final Year Computer Science student focused on AI, Machine Learning, LLMs, RAG Systems, and Full Stack Development. Shipping production-grade solutions that optimize workflow efficiency.
+            Final Year Computer Science student focused on AI, Machine Learning, LLMs, RAG Systems, and Full Stack Development. Building intelligent systems that bridge the gap between human needs and machine capability.
           </motion.p>
 
           {/* Action CTAs */}
@@ -80,15 +79,15 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="px-6 py-3.5 bg-primary text-[#030303] text-sm font-semibold rounded-md shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:bg-[#00d4e8] transition-all transform hover:-translate-y-0.5"
+              className="btn-premium"
             >
               View Projects
             </a>
             <a
-              href="/certificates/Learntube Web Dev Certificate.pdf" /* Fallback to a cert or resume link */
+              href="/certificates/Learntube Web Dev Certificate.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-md text-sm font-semibold transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="btn-secondary-glass flex items-center gap-2"
             >
               <FileText className="w-4 h-4" /> Resume
             </a>
@@ -118,40 +117,41 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right Accent Image */}
+        {/* Right Robot Canvas Column */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="lg:col-span-5 flex justify-center items-center relative"
+          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+          className="lg:col-span-5 flex justify-center items-center relative min-h-[480px]"
         >
-          {/* Glassmorphic border container */}
-          <div className="relative group w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
-            {/* Glowing Backdrop Circle */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/20 via-purple-600/10 to-transparent blur-3xl opacity-80 group-hover:scale-105 transition-transform duration-700" />
-            
-            {/* Animated Ring */}
-            <div className="absolute inset-0 rounded-2xl border border-white/5 p-4 bg-zinc-900/40 backdrop-blur-md shadow-2xl flex items-center justify-center">
-              <div className="relative w-full h-full rounded-xl overflow-hidden border border-white/10">
-                <Image
-                  src="/pfp.jpg"
-                  alt="Ajinkya Mane"
-                  fill
-                  priority
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-95"
-                />
-              </div>
-            </div>
+          {/* Parallax Humanoid Canvas */}
+          <RobotCanvas />
 
-            {/* Micro badges floating around profile card */}
-            <div className="absolute top-8 -left-8 glass border border-white/10 px-4 py-2 rounded-lg flex items-center gap-2 animate-bounce duration-[4000ms]">
-              <span className="text-emerald-400 animate-pulse text-xl">●</span>
-              <span className="text-xs text-zinc-300 font-mono tracking-wide">Available for Roles</span>
+          {/* Floating Badges */}
+          {/* Badge 1: CGPA */}
+          <div className="absolute top-[50px] right-[10px] sm:right-[30px] bg-[#080d1a]/92 border border-[#00d4e8]/30 rounded-xl p-3 flex items-center gap-2.5 backdrop-blur-md shadow-2xl animate-float-badge z-20">
+            <span className="text-xl">🎓</span>
+            <div className="flex flex-col text-left">
+              <span className="font-syne text-base font-bold text-[#00d4e8] leading-none">8.7</span>
+              <span className="text-[9px] text-[#6b7a99] font-mono leading-none mt-1">CGPA</span>
             </div>
-            
-            <div className="absolute bottom-8 -right-8 glass border border-white/10 px-4 py-2 rounded-lg flex items-center gap-2 animate-bounce duration-[5000ms]">
-              <span className="text-primary text-base">🤖</span>
-              <span className="text-xs text-zinc-300 font-mono tracking-wide">AI Research</span>
+          </div>
+
+          {/* Badge 2: Full Stack */}
+          <div className="absolute bottom-[60px] left-0 sm:left-[20px] bg-[#080d1a]/92 border border-[#00d4e8]/30 rounded-xl p-3 flex items-center gap-2.5 backdrop-blur-md shadow-2xl animate-float-badge z-20" style={{ animationDelay: "2s" }}>
+            <span className="text-xl">⚡</span>
+            <div className="flex flex-col text-left">
+              <span className="font-syne text-sm font-bold text-[#00d4e8] leading-none">Full Stack</span>
+              <span className="text-[9px] text-[#6b7a99] font-mono leading-none mt-1">Developer</span>
+            </div>
+          </div>
+
+          {/* Badge 3: AI Specialist */}
+          <div className="absolute top-[45%] right-[-15px] sm:right-0 bg-[#080d1a]/92 border border-[#00d4e8]/30 rounded-xl p-3 flex items-center gap-2.5 backdrop-blur-md shadow-2xl animate-float-badge z-20" style={{ animationDelay: "1s" }}>
+            <span className="text-xl">🤖</span>
+            <div className="flex flex-col text-left">
+              <span className="font-syne text-sm font-bold text-[#00d4e8] leading-none">AI</span>
+              <span className="text-[9px] text-[#6b7a99] font-mono leading-none mt-1">Enthusiast</span>
             </div>
           </div>
         </motion.div>
