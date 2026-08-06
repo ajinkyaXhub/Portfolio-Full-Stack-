@@ -84,7 +84,7 @@ export default function Hero() {
               View Projects
             </a>
             <a
-              href="/certificates/Learntube Web Dev Certificate.pdf"
+              href="/RESUME.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary-glass flex items-center gap-2"

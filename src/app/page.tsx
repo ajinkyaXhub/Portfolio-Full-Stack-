@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import BackgroundGrid from "@/components/BackgroundGrid";
 import BackgroundParticles from "@/components/BackgroundParticles";
@@ -11,34 +15,67 @@ import CurrentlyExploring from "@/components/CurrentlyExploring";
 import GithubStats from "@/components/GithubStats";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
+import Preloader from "@/components/Preloader";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Lock scrolling while preloader runs
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isLoading]);
+
   return (
     <>
-      {/* Interactive Cursor Trail */}
-      <CustomCursor />
+      {/* Cinematic diagnostic preloader overlay */}
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <motion.div
+            key="preloader"
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[9999]"
+          >
+            <Preloader onComplete={() => setIsLoading(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Starry Connected Constellation Canvas Backdrop */}
-      <BackgroundParticles />
+      {/* Main Page Content (will fade in after loader) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        {/* Interactive Cursor Trail */}
+        <CustomCursor />
 
-      {/* Floating Glowing Blobs Grid Backdrop */}
-      <BackgroundGrid />
+        {/* Starry Connected Constellation Canvas Backdrop */}
+        <BackgroundParticles />
 
-      {/* Navigation */}
-      <Navbar />
+        {/* Floating Glowing Blobs Grid Backdrop */}
+        <BackgroundGrid />
 
-      {/* Main Content Layout */}
-      <main className="relative flex flex-col min-h-screen">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <TechStack />
-        <CurrentlyExploring />
-        <GithubStats />
-        <Achievements />
-        <Contact />
-      </main>
+        {/* Navigation */}
+        <Navbar />
+
+        {/* Main Content Layout */}
+        <main className="relative flex flex-col min-h-screen">
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <TechStack />
+          <CurrentlyExploring />
+          <GithubStats />
+          <Achievements />
+          <Contact />
+        </main>
+      </motion.div>
     </>
   );
 }

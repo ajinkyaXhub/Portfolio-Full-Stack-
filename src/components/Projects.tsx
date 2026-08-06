@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, ShieldCheck, Cpu, Database, Flame, Clock, MessageSquare, Home, Heart, Key, DollarSign, Music } from "lucide-react";
+import TiltCard from "./TiltCard";
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -167,7 +168,13 @@ export default function Projects() {
     <section id="projects" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4"
+        >
           <div>
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#00d4e8]">03 / Works</span>
             <h2 className="text-4xl font-extrabold text-white mt-2">Projects Portfolios</h2>
@@ -188,7 +195,7 @@ export default function Projects() {
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
         <motion.div
@@ -196,66 +203,69 @@ export default function Projects() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((proj) => {
-              // Find index in main projects array for layout ID mapping
+            {filteredProjects.map((proj, idx) => {
               const mainIdx = projects.findIndex((p) => p.title === proj.title);
               const Icon = proj.icon;
               return (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ type: "spring", stiffness: 80, delay: (idx % 3) * 0.1 }}
                   onClick={() => setSelectedIdx(mainIdx)}
                   key={proj.title}
-                  className="glass p-6 rounded-2xl border border-white/5 hover:border-[#00d4e8]/20 hover:bg-white/[0.01] transition-all flex flex-col justify-between min-h-[300px] cursor-pointer relative group overflow-hidden"
+                  className="h-full"
                 >
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#00d4e8]/5 rounded-full blur-2xl group-hover:bg-[#00d4e8]/10 transition-colors" />
+                  <TiltCard className="h-full rounded-2xl">
+                    <div className="glass p-6 rounded-2xl border border-white/5 hover:border-[#00d4e8]/20 hover:bg-white/[0.01] transition-all flex flex-col justify-between h-full relative group overflow-hidden">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#00d4e8]/5 rounded-full blur-2xl group-hover:bg-[#00d4e8]/10 transition-colors" />
 
-                  <div>
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="p-3 bg-zinc-950 border border-white/5 rounded-lg text-[#00d4e8]">
-                        <Icon className="w-5 h-5" />
+                      <div>
+                        <div className="flex justify-between items-start mb-6">
+                          <div className="p-3 bg-zinc-950 border border-white/5 rounded-lg text-[#00d4e8]">
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          {proj.badge ? (
+                            <span className="px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-purple-500/10 border border-purple-500/25 text-purple-400 rounded-full flex items-center gap-1.5 animate-pulse">
+                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                              {proj.badge}
+                            </span>
+                          ) : (
+                            <span className="text-[9px] font-mono font-semibold uppercase text-zinc-500 tracking-wider">
+                              {proj.category}
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#00d4e8] transition-colors line-clamp-1">
+                          {proj.title}
+                        </h3>
+                        <p className="text-zinc-400 text-xs leading-relaxed line-clamp-3 mb-6">
+                          {proj.solution}
+                        </p>
                       </div>
-                      {proj.badge ? (
-                        <span className="px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-purple-500/10 border border-purple-500/25 text-purple-400 rounded-full flex items-center gap-1.5 animate-pulse">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                          {proj.badge}
+
+                      <div>
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {proj.tech.slice(0, 3).map((t) => (
+                            <span key={t} className="text-[9px] font-mono font-semibold px-2 py-0.5 bg-zinc-950 border border-white/5 text-zinc-400 rounded">
+                              {t}
+                            </span>
+                          ))}
+                          {proj.tech.length > 3 && (
+                            <span className="text-[9px] font-mono font-semibold px-2 py-0.5 bg-zinc-950 border border-white/5 text-zinc-500 rounded">
+                              +{proj.tech.length - 3}
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="text-xs font-mono font-bold tracking-wider text-[#00d4e8] group-hover:underline flex items-center gap-1">
+                          Analyze Details →
                         </span>
-                      ) : (
-                        <span className="text-[9px] font-mono font-semibold uppercase text-zinc-500 tracking-wider">
-                          {proj.category}
-                        </span>
-                      )}
+                      </div>
                     </div>
-
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#00d4e8] transition-colors line-clamp-1">
-                      {proj.title}
-                    </h3>
-                    <p className="text-zinc-400 text-xs leading-relaxed line-clamp-3 mb-6">
-                      {proj.solution}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {proj.tech.slice(0, 3).map((t) => (
-                        <span key={t} className="text-[9px] font-mono font-semibold px-2 py-0.5 bg-zinc-950 border border-white/5 text-zinc-400 rounded">
-                          {t}
-                        </span>
-                      ))}
-                      {proj.tech.length > 3 && (
-                        <span className="text-[9px] font-mono font-semibold px-2 py-0.5 bg-zinc-950 border border-white/5 text-zinc-500 rounded">
-                          +{proj.tech.length - 3}
-                        </span>
-                      )}
-                    </div>
-
-                    <span className="text-xs font-mono font-bold tracking-wider text-[#00d4e8] group-hover:underline flex items-center gap-1">
-                      Analyze Details →
-                    </span>
-                  </div>
+                  </TiltCard>
                 </motion.div>
               );
             })}
