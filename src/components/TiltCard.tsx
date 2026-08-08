@@ -12,8 +12,8 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   // Motion values for tracking coordinates
-  const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
+  const x = useMotionValue(0.5);
 
   // Smooth springs for dampening movement
   const springConfig = { damping: 30, stiffness: 300, mass: 0.5 };
@@ -46,6 +46,8 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
     y.set(0.5);
   };
 
+
+  
   return (
     <motion.div
       ref={cardRef}
